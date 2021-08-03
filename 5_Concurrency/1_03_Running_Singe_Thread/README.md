@@ -123,7 +123,7 @@ Programmers should be very careful though when using the `detach()`-method. You 
 %%ulab_page_divider
 --><hr/>
 
-##join vs detch
+## join vs detch
 
 
     Q: 在一个线程中，开了另一个线程去干另一件事，使用join函数后，原始线程会等待新线程执行结束之后，再去销毁线程对象。
