@@ -14,7 +14,7 @@ int main() {
   std::this_thread::sleep_for(std::chrono::milliseconds(50));  // simulate work
   std::cout << "Finished work in main. \n";
 
-  // wait for thread to finish
+  // join(): wait for thread to finish, and run the rest code in this thread
   t.join();
 
   return 0;
