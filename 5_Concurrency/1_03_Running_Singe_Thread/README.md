@@ -135,6 +135,11 @@ Programmers should be very careful though when using the `detach()`-method. You 
     - 但是使用join可能会造成性能损失，因为原始线程要等待新线程的完成，所以有些情况（前提是你知道这种情况，如上）使用detch会更好。
     
     
+    - join，主线程就会等待子线程运行结束，然后主线程在运行，直到结束，传统编程就是如此，试想如果子线程访问主线程中的资源，如果主线程结束了，其中资源释放，但是子线程还在运行，要访问资源，这样的话肯定会出问题的，
+    - detach，即分离的意思，一旦detach，就讲子线程交给系统托管，与进程，主线程无关了，这种情况下，就很可能主线程结束，子线程还在运行，所以detach就引发出问题
+
+    
+    
     
 ## Quiz: Starting your own threads
 
