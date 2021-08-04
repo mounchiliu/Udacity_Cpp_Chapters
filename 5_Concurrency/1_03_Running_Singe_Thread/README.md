@@ -255,12 +255,12 @@ thread内部获取这个对象时， 又会调用拷贝函数
     
 如果使用隐式传递
     
-···cpp
+```cpp
 #include <iostream>
 #include <thread>
-
+    
 using namespace std;
-
+    
 class A {
 public:
     int ai;
@@ -278,7 +278,7 @@ public:
         cout << "析构" << this << endl;
     }
 };
-
+    
 //void test(const A a)
 void test(const A b)
 {
@@ -287,8 +287,7 @@ void test(const A b)
     cout << "子线程结束" << endl;
     return;
 }
-
-
+    
 int main()
 {
     cout << "主线程开始" << endl;
