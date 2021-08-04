@@ -306,7 +306,7 @@ int main()
 - 如果把join 替换成 detach，发现若使用隐式传递，会在主线程创造thread是创造一个对象待以后传入thread，传入的操作如果此可能发生在主线程结束之后， 会发现无法创建object，因为与object相关的资源已经销毁  
 
 - 而如果传递一个临时对象 ![image](https://user-images.githubusercontent.com/47606318/128204440-91ac62cf-a6d5-45e5-b261-78efa844267b.png)
-  就算detach， 也ok，创建thread时会对创建的对象进行拷贝。
+  就算detach， 也ok，创建thread时会对创建的对象A(i)进行拷贝，传入时就传拷贝好了的。
     
 ### Reference:
 https://www.cnblogs.com/chen-cs/p/13056703.html
