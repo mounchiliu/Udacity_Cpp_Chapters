@@ -256,7 +256,7 @@ thread内部获取这个对象时， 又会调用拷贝函数
 如果使用隐式传递
     
 ···cpp
-    #include <iostream>
+#include <iostream>
 #include <thread>
 
 using namespace std;
