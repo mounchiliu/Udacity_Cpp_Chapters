@@ -300,7 +300,7 @@ int main()
     cout << "主线程结束！" << endl;
     return 0;
 }
-···
+```
 
 - 如果把join 替换成 detach，发现若使用隐式传递，会在主线程创造thread是创造一个对象待以后传入thread，传入的操作如果此可能发生在主线程结束之后， 会发现无法创建object，因为与object相关的资源已经销毁  
 
