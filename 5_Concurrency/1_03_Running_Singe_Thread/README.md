@@ -210,13 +210,15 @@ The order in which even and odd threads are executed changes. Also, some threads
 　　3、在detach下要避免隐式转换，因为此时子线程可能还来不及转换主线程就结束了，应该在构造线程时，用参数构造一个临时对象传入。
     
 ### example
-    ![image](https://user-images.githubusercontent.com/47606318/128193980-c5afb191-b9ca-4820-96c0-29a9b67d83d1.png)
-
-    第一个构造是在主程序内，对应第一个析构
-    第二个是拷贝构造，对应thread内，对应第二个析构， 因为如果线程函数中形参的是引用类型，那主线程会将传入的值做一次赋值. thread_func内部的对应对象地址变了，而传回来的没有变
     
-    可以通过以下方式查看
-    ···cpp
+![image](https://user-images.githubusercontent.com/47606318/128193980-c5afb191-b9ca-4820-96c0-29a9b67d83d1.png)
+
+第一个构造是在主程序内，对应第一个析构
+第二个是拷贝构造，对应thread内，对应第二个析构， 因为如果线程函数中形参的是引用类型，那主线程会将传入的值做一次赋值. thread_func内部的对应对象地址变了，而传回来的没有变
+    
+可以通过以下方式查看
+    
+···cpp
     {
     cout << "主线程开始" << endl;
     int i = 4;
@@ -231,20 +233,20 @@ The order in which even and odd threads are executed changes. Also, some threads
 ···
     
     
-    Note: 形参：函数的arg
-          实参：调用函数的arg
+Note: 形参：函数的arg
+      实参：调用函数的arg
     
-    ![image](https://user-images.githubusercontent.com/47606318/128196627-0f4ab0f0-9b07-4451-a412-080b788a2835.png)
-    ![image](https://user-images.githubusercontent.com/47606318/128196672-1a438bb1-2a16-4237-bd79-4fa99cfa1a85.png)
+![image](https://user-images.githubusercontent.com/47606318/128196627-0f4ab0f0-9b07-4451-a412-080b788a2835.png)
+![image](https://user-images.githubusercontent.com/47606318/128196672-1a438bb1-2a16-4237-bd79-4fa99cfa1a85.png)
 
-    如果函数的形参是类的对象，调用函数参数是值传递， 会调用拷贝函数， 即函数调用时候（参数为类）值传递会产生临时变量。
-    thread内部获取这个对象时， 又会调用拷贝函数
-    所以是三次
+如果函数的形参是类的对象，调用函数参数是值传递， 会调用拷贝函数， 即函数调用时候（参数为类）值传递会产生临时变量。
+thread内部获取这个对象时， 又会调用拷贝函数
+所以是三次
     
-    因此， 接收时使用引用更高效
+因此， 接收时使用引用更高效
     
-    总结：
-    ![image](https://user-images.githubusercontent.com/47606318/128201480-cef08439-9423-4695-86fe-be15c181232f.png)
+总结：
+![image](https://user-images.githubusercontent.com/47606318/128201480-cef08439-9423-4695-86fe-be15c181232f.png)
 
     
 ### Reference:
