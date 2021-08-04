@@ -200,3 +200,6 @@ Run the program several times and look the console output. What do you observe? 
 <img src="./C2-3-A6-1.png"/>
 
 The order in which even and odd threads are executed changes. Also, some threads are executed after the main function reaches its end. When `sleep_for` is removed, threads will not finish before the program terminates.
+
+detach 坑：   
+https://blog.csdn.net/qq_33435360/article/details/106310510
