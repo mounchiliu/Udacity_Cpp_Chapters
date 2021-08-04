@@ -210,6 +210,8 @@ The order in which even and odd threads are executed changes. Also, some threads
 　　3、在detach下要避免隐式转换，因为此时子线程可能还来不及转换主线程就结束了，应该在构造线程时，用参数构造一个临时对象传入。
     
 ### example
+
+**Q.1**
     
 ![image](https://user-images.githubusercontent.com/47606318/128193980-c5afb191-b9ca-4820-96c0-29a9b67d83d1.png)
 
@@ -235,7 +237,8 @@ The order in which even and odd threads are executed changes. Also, some threads
     
 Note: 形参：函数的arg
       实参：调用函数的arg
-    
+ 
+**Q2**    
 ![image](https://user-images.githubusercontent.com/47606318/128196627-0f4ab0f0-9b07-4451-a412-080b788a2835.png)
 ![image](https://user-images.githubusercontent.com/47606318/128196672-1a438bb1-2a16-4237-bd79-4fa99cfa1a85.png)
 
@@ -248,6 +251,62 @@ thread内部获取这个对象时， 又会调用拷贝函数
 总结：
 ![image](https://user-images.githubusercontent.com/47606318/128201480-cef08439-9423-4695-86fe-be15c181232f.png)
 
+**Q3**
+    
+如果使用隐式传递
+    
+···cpp
+    #include <iostream>
+#include <thread>
+
+using namespace std;
+
+class A {
+public:
+    int ai;
+    A(int i) : ai(i)
+    {
+        cout << "构造" << this << endl;
+    }
+
+    A(const A& a) :ai(a.ai) {
+        cout << "拷贝构造" << this << endl;
+    }
+
+    ~A()
+    {
+        cout << "析构" << this << endl;
+    }
+};
+
+//void test(const A a)
+void test(const A b)
+{
+    cout << &b << std::endl;
+    cout << "子线程开始" << endl;
+    cout << "子线程结束" << endl;
+    return;
+}
+
+
+int main()
+{
+    cout << "主线程开始" << endl;
+    int i = 4;
+    A a(i);
+    std::cout << "1 " << &a << std::endl;
+    //test(a);
+    thread t(test, i); //隐式传递，i为int，隐式传递一个object
+    t.join();
+    cout << "主线程结束！" << endl;
+    return 0;
+}
+···
+
+- 如果把join 替换成 detach，发现若使用隐式传递，会在主线程创造thread是创造一个对象待以后传入thread，传入的操作如果此可能发生在主线程结束之后， 会发现无法创建object，因为与object相关的资源已经销毁  
+
+- 而如果传递一个临时对象 ![image](https://user-images.githubusercontent.com/47606318/128204440-91ac62cf-a6d5-45e5-b261-78efa844267b.png)
+  就算detach， 也ok，创建thread时会对创建的对象进行拷贝。
     
 ### Reference:
 https://www.cnblogs.com/chen-cs/p/13056703.html
